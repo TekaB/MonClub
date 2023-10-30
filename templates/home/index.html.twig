@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+{% set page_title = "MonClub - Accueil" %}
+{# twigcs use_var page_title #}
+
+{% block content %}
+    <div class="card">
+        <div class="card-body">
+            <h1 class="card-title">Bienvenue sur MonClub !</h1>
+            <div class="card-text">
+                <p class="card-text">Découvrez cet outil qui vous permet de gérer vos équipes au sein de votre club.</p>
+                <a href="{{ path('app_club') }}">Ajouter mon club !</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

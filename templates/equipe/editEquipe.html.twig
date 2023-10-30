@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+{% set page_title = 'Mon club - Modifier équipe' %}
+{% block content %}
+    <div class="bg-info text-white p-3 mb-3">
+        <h1 class="h1">Gérer {{ equipe.niveau }}</h1>
+    </div>
+    <div class="card mx-3">
+        <div class="card-body">
+            {{ form_start(form) }}
+                <div>
+                    {{ form_row(form.niveau, {'attr': {'class': 'form-control', 'style': 'width: unset;'}}) }}
+                </div>
+                <div>
+                    Joueurs de l'équipe
+                    <div class="d-flex">
+                        {% for joueur in form.joueurs %}
+                            {% if joueur.vars.checked %}
+                                <div class="card-body-joueur border border-primary m-1 pr-2 rounded">
+                                    {{ form_row(joueur, {'label_attr': {'class': 'mb-0 p-3 pr-2 mr-2'}}) }}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <hr>
+                    A disposition | Joueurs d'autres équipes
+                    <div class="d-flex flex-wrap">
+                        {% for joueur in form.joueurs %}
+                            {% if not joueur.vars.checked %}
+                                <div class="card-body-joueur border border-secondary m-1 pr-2 rounded">
+                                    {{ form_row(joueur, {'label_attr': {'class': 'mb-0 p-3 pr-2 mr-2'}}) }}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                {{ form_rest(form) }}
+            <div class="d-flex">
+                <button class="btn btn-primary mr-1">Valider</button>
+                <a class="btn btn-danger" href="{{ path('app_equipe_delete', {id: equipe.id}) }}">Supprimer</a>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

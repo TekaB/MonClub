@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+{% set page_title = 'MonClub  - Mon club' %}
+{# twigcs use_var page_title #}
+
+{% block content %}
+    <div class="bg-info text-white p-3 mb-4">
+        <p class="d-flex align-items-center mb-0"><span class="h1 mr-3"> {{ club.club.nom }} - </span> <a class="btn btn-primary" href="{{ path('app_club_edit') }}">Modifier</a></p>
+    </div>
+    <div class="card-group mx-3 mb-3 justify-content-start">
+        <div class="card">
+            <div class="card-header text-primary h1">{{ nbJoueurs > 1 ? 'Joueurs' : 'Joueur'  }}</div>
+            <div class="card-body">
+                <p class="card-title h1">{{ nbJoueurs }}</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header text-primary h1">{{ nbEquipe > 1 ? 'Equipes' : 'Equipe' }}</div>
+            <div class="card-body">
+                <p class="card-title h1">{{ nbEquipe }}</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

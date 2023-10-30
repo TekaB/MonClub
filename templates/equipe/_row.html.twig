@@ -1,0 +1,17 @@
+<div class="card mb-1">
+    <div class="card-header text-primary">
+        <div>
+            <a class='h4' href="{{ path('app_equipe_edit', {id: equipe.id}) }}">{{ equipe.niveau }}</a>
+            {% if equipe.joueurs|length < equipe.MAXJOUEUR %}
+                <a class="text-secondary" href="{{ path('app_equipe_autocomplete', {id: equipe.id}) }}">Remplissage auto</a>
+            {% endif %}
+        </div>
+    </div>
+    {% if equipe.joueurs is defined and equipe.joueurs|length > 0 %}
+        <div class="card-body d-flex flex-wrap">
+            {% for joueur in equipe.joueurs|sort((a, b) => a.points < b.points) %}
+                {% include 'joueur/_card.html.twig' %}
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>

@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+{% set page_title = 'MonClub - Mes équipes' %}
+{% block content %}
+    {% if equipes|length > 0 %}
+        <div class="bg-info text-white p-3 d-flex mb-3">
+            <h1 class="h1">Mes équipes - </h1>
+            <div class="w-50 d-flex ml-3 align-items-center">
+                {{ form_start(form, {'attr': {'class': 'form d-flex align-items-center'}}) }}
+                <div class="d-flex align-items-center">
+                    {{ form_label(form.niveau, 'Nouvelle ', {'label_attr': {'class': 'h4 mb-0 mr-2'}}) }}
+                    {{ form_widget(form.niveau, {'attr': {'class' : 'form-control mr-2'}}) }}
+                </div>
+                {{ form_rest(form) }}
+                <button class="btn btn-primary">OK</button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+        <div class="mx-3 card-group d-flex flex-column">
+            {% for equipe in equipes %}
+                {% include 'equipe/_row.html.twig' %}
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-warning"> Aucune équipe n'existe encore. Créer une équipe avec la création rapide</div>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+{% set page_title = 'MonClub - Modifier joueur' %}
+{% block content %}
+    <div class="bg-info h1 text-white p-3">
+        Modifier {{ joueur.prenom }} {{ joueur.nom }}
+    </div>
+    <div class="card mx-3 p-3">
+        {{ form_start(form) }}
+        <div class="mb-2">
+            {{ form_label(form.nom) }}
+            {{ form_widget(form.nom) }}
+        </div>
+        <div class="mb-2">
+            {{ form_label(form.prenom) }}
+            {{ form_widget(form.prenom) }}
+        </div>
+        <div class="mb-2">
+            {{ form_label(form.numeroLicence) }}
+            {{ form_widget(form.numeroLicence) }}
+        </div>
+        <div class="mb-3">
+            {{ form_label(form.typeLicence) }}
+            {{ form_widget(form.typeLicence) }}
+        </div>
+        <div class="mb-3">
+            {{ form_label(form.points) }}
+            {{ form_widget(form.points) }}
+        </div>
+        <div class="d-flex">
+            {{ form_row(form.add, {'label': 'Modifier'}) }}
+            {{ form_row(form.addAndStartAgain, {'label': 'Modifier et en créer un nouveau'}) }}
+            <a class='btn btn-danger' href="{{ path('app_joueur_delete', {id: joueur.id}) }}">Supprimer</a>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
