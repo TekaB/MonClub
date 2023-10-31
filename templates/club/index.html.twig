@@ -11,6 +11,19 @@
             <div class="card-header text-primary h1">{{ nbJoueurs > 1 ? 'Joueurs' : 'Joueur'  }}</div>
             <div class="card-body">
                 <p class="card-title h1">{{ nbJoueurs }}</p>
+                {% if nbCompetiteur > 0 or nbLoisir > 0 or nbEvenementiel > 0 %}
+                    <ul>
+                        {% if nbCompetiteur > 0 %}
+                            <li>{{ (nbCompetiteur > 0) ? nbCompetiteur ~ ' compétiteurs' : ' compétiteur' }}</li>
+                        {% endif %}
+                        {% if nbEvenementiel > 0 %}
+                            <li>{{ (nbEvenementiel > 0) ? nbEvenementiel ~ ' licences événementielle' : ' licence événementielle' }}</li>
+                        {% endif %}
+                        {% if nbLoisir > 0 %}
+                            <li>{{ (nbLoisir > 0) ? nbLoisir ~ ' licences loisir' : ' licence loisir' }}</li>
+                        {% endif %}
+                    </ul>
+                {% endif %}
             </div>
         </div>
         <div class="card">

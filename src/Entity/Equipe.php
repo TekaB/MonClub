@@ -26,6 +26,22 @@ class Equipe
         'D3' => 'D3',
     ];
 
+    const DEFAULT_PRIORITY = [
+        'PRO A' => 100,
+        'PRO B' => 90,
+        'N1' => 80,
+        'N2' => 70,
+        'N3' => 60,
+        'PN' => 50,
+        'R1' => 40,
+        'R2' => 30,
+        'R3' => 20,
+        'R4' => 15,
+        'D1' => 10,
+        'D2' => 5,
+        'D3' => 0,
+    ];
+
     const MAXJOUEUR = 4;
 
     #[ORM\Id]
@@ -36,11 +52,14 @@ class Equipe
     #[ORM\Column(length: 255)]
     private ?string $niveau = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $priorite = null;
+    #[ORM\Column]
+    private ?int $priorite = null;
 
     #[ORM\OneToMany(mappedBy: 'equipe', targetEntity: Joueur::class)]
     private Collection $joueurs;
+
+    #[ORM\Column(options: ['default' => 0])]
+    private ?int $numero = null;
 
     public function __construct()
     {
@@ -64,12 +83,12 @@ class Equipe
         return $this;
     }
 
-    public function getPriorite(): ?string
+    public function getPriorite(): int
     {
         return $this->priorite;
     }
 
-    public function setPriorite(string $priorite): static
+    public function setPriorite(int $priorite): static
     {
         $this->priorite = $priorite;
 
@@ -106,8 +125,20 @@ class Equipe
         return $this;
     }
 
-    public function getMaxJoueur()
+    public function getMaxJoueur(): int
     {
         return Equipe::MAXJOUEUR;
+    }
+
+    public function getNumero(): ?int
+    {
+        return $this->numero;
+    }
+
+    public function setNumero(int $numero): static
+    {
+        $this->numero = $numero;
+
+        return $this;
     }
 }

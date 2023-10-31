@@ -17,8 +17,8 @@ class JoueurController extends AbstractController
     public function index(JoueurRepository $joueurRepository): Response
     {
         return $this->render('joueur/index.html.twig', [
-            'joueursDispo' => $joueurRepository->findBy(['equipe' => null], ['points' => 'DESC']),
-            'joueurOccupe' => $joueurRepository->findJoueurWithTeam(),
+            'joueursNonCompet' => $joueurRepository->findJoueurNonCompet(),
+            'joueursCompet' => $joueurRepository->findBy(['typeLicence' => Joueur::TYPELICENCE['Compétition']], ['points' => 'DESC']),
         ]);
     }
 

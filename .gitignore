@@ -23,3 +23,4 @@
 /public/assets/
 ###< symfony/asset-mapper ###
 /public/uploads/club_images_directory/
+.php-cs-fixer.cache

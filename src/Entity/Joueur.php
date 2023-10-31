@@ -104,7 +104,7 @@ class Joueur
 
     public function __toString(): string
     {
-        return $this->getNom().' '.$this->getPrenom().' - '.$this->getPoints();
+        return $this->getNom() . ' ' . $this->getPrenom() . ' - ' . $this->getPoints();
     }
 
     public function getTypeLicence(): ?string

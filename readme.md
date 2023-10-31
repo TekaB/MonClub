@@ -7,8 +7,7 @@
 - Create .env.local
 - change DATABASE_URL to use your own database
 - run `php bin/console do:mi:mi` at the root of the project to generate Schema and table
-
-/!\ No fixtures yet ! /!\
+- run ``php bin/console do:fixtures:load`` to generate to start using the main features quickly
 
 # Usage
 

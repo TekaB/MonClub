@@ -2,17 +2,17 @@
 
 namespace App\Controller;
 
-use App\Repository\EquipeRepository;
-use App\Repository\JoueurRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use App\Entity\Club;
+use App\Entity\Joueur;
 use App\Form\ClubType;
 use App\Repository\ClubRepository;
+use App\Repository\EquipeRepository;
+use App\Repository\JoueurRepository;
 use App\Service\ClubService;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 class ClubController extends AbstractController
@@ -22,19 +22,33 @@ class ClubController extends AbstractController
         EquipeRepository $equipeRepository,
         JoueurRepository $joueurRepository
     ): Response {
+        $allJoueurs = $joueurRepository->findAll();
         $nbEquipe = count($equipeRepository->findAll());
-        $nbJoueurs = count($joueurRepository->findAll());
+        $nbJoueurs = count($allJoueurs);
+        $nbCompetiteur = count(array_filter($allJoueurs, function ($joueur) {
+            return ($joueur->getTypeLicence() === Joueur::TYPELICENCE['Compétition']);
+        }));
+        $nbLoisir = count(array_filter($allJoueurs, function ($joueur) {
+            return ($joueur->getTypeLicence() === Joueur::TYPELICENCE['Loisir']);
+        }));
+        $nbEvenementiel = count(array_filter($allJoueurs, function ($joueur) {
+            return ($joueur->getTypeLicence() === Joueur::TYPELICENCE['Evénementiel']);
+        }));
 
         return $this->render('club/index.html.twig', [
             'nbJoueurs' => $nbJoueurs,
             'nbEquipe' => $nbEquipe,
+            'nbCompetiteur' => $nbCompetiteur,
+            'nbLoisir' => $nbLoisir,
+            'nbEvenementiel' => $nbEvenementiel,
         ]);
     }
+
     #[Route('/club/edit', name: 'app_club_edit')]
     public function edit(
-        ClubRepository $clubRepository,
-        ClubService $clubService,
-        Request $request,
+        ClubRepository   $clubRepository,
+        ClubService      $clubService,
+        Request          $request,
         SluggerInterface $slugger
     ): Response {
         $club = $clubService->getClub();
@@ -47,7 +61,7 @@ class ClubController extends AbstractController
             if ($image) {
                 $originalFilename = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
                 $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$image->guessExtension();
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $image->guessExtension();
                 $club->setImage($newFilename);
 
                 try {
