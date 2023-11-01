@@ -23,10 +23,13 @@ class ClubRepository extends ServiceEntityRepository
         parent::__construct($registry, Club::class);
     }
 
-    public function add(Club $club, $flush = false): void {
+    public function add(Club $club, $flush = false): void
+    {
         $em = $this->getEntityManager();
         $em->persist($club);
 
-        if ($flush) $em->flush();
+        if ($flush) {
+            $em->flush();
+        }
     }
 }

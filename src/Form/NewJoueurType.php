@@ -69,8 +69,7 @@ class NewJoueurType extends AbstractType
                 'attr' => [
                     'class' => 'btn btn-secondary mr-2'
                 ]
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

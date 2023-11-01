@@ -21,18 +21,24 @@ class JoueurRepository extends ServiceEntityRepository
         parent::__construct($registry, Joueur::class);
     }
 
-    public function add(Joueur $joueur, $flush = false): void {
+    public function add(Joueur $joueur, $flush = false): void
+    {
         $em = $this->getEntityManager();
         $em->persist($joueur);
 
-        if ($flush) $em->flush();
+        if ($flush) {
+            $em->flush();
+        }
     }
 
-    public function remove(Joueur $joueur, $flush = false): void {
+    public function remove(Joueur $joueur, $flush = false): void
+    {
         $em = $this->getEntityManager();
         $em->remove($joueur);
 
-        if ($flush) $em->flush();
+        if ($flush) {
+            $em->flush();
+        }
     }
 
     public function findJoueurWithTeam(): array
@@ -41,5 +47,14 @@ class JoueurRepository extends ServiceEntityRepository
             ->where('j.equipe IS NOT NULL')
             ->orderBy('j.points', 'DESC')
             ->getQuery()->getResult();
+    }
+
+    public function findJoueurNonCompet(): array
+    {
+        return $this->createQueryBuilder('j')
+            ->where('j.typeLicence NOT LIKE \'Compétitif\'')
+            ->orderBy('j.points', 'DESC')
+            ->getQuery()
+            ->getResult();
     }
 }

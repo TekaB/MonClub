@@ -22,17 +22,36 @@ class EquipeRepository extends ServiceEntityRepository
         parent::__construct($registry, Equipe::class);
     }
 
-    public function add(Equipe $equipe, $flush = false): void {
+    public function add(Equipe $equipe, $flush = false): void
+    {
         $em = $this->getEntityManager();
         $em->persist($equipe);
 
-        if ($flush) $em->flush();
+        if ($flush) {
+            $em->flush();
+        }
     }
 
-    public function remove(Equipe $equipe, $flush = false): void {
+    public function remove(Equipe $equipe, $flush = false): void
+    {
         $em = $this->getEntityManager();
         $em->remove($equipe);
 
-        if ($flush) $em->flush();
+        if ($flush) {
+            $em->flush();
+        }
+    }
+
+    public function findIncompleteTeam()
+    {
+        $equipes = $this->findBy([], ['priorite' => 'DESC']);
+
+        foreach ($equipes as $key => $equipe) {
+            if (count($equipe->getJoueurs()) >= 4) {
+                unset($equipes[$key]);
+            }
+        }
+
+        return $equipes;
     }
 }
