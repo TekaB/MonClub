@@ -13,7 +13,7 @@
             {{ form_rest(form) }}
             <button class="btn btn-primary mr-1">OK</button>
             {{ form_end(form) }}
-            {% if nbUncompleteTeam > 0 and nbAvailablePlayer > 1 %}<a class="btn btn-secondary" href="{{ path('app_equipe_autocompleteall') }}">Remplir mes équipes</a>{% endif %}
+            {% if nbUncompleteTeam > 0 and nbAvailablePlayer > 0 %}<a class="btn btn-secondary" href="{{ path('app_equipe_autocompleteall') }}">Remplir mes équipes</a>{% endif %}
         </div>
     </div>
     {% if equipes|length > 0 %}
