@@ -2,7 +2,7 @@
     <div class="card-header text-primary">
         <div>
             <a class='h4' href="{{ path('app_equipe_edit', {id: equipe.id}) }}">{{ club.club.nom }} {{ equipe.numero }} ({{ equipe.niveau }})</a>
-            {% if equipe.joueurs|length < equipe.MAXJOUEUR %}
+            {% if equipe.joueurs|length < equipe.MAXJOUEUR and nbAvailablePlayer > 0 %}
                 <a class="text-secondary" href="{{ path('app_equipe_autocomplete', {id: equipe.id}) }}">Remplissage auto</a>
             {% endif %}
         </div>

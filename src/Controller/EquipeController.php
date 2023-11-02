@@ -17,10 +17,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class EquipeController extends AbstractController
 {
     #[Route('/equipe', name: 'app_equipe')]
-    public function index(EquipeRepository $equipeRepository, Request $request): Response
+    public function index(EquipeRepository $equipeRepository, Request $request, JoueurRepository $joueurRepository): Response
     {
         $allEquipes = $equipeRepository->findBy([], ['numero' => 'ASC']);
         $nbUncompleteTeam = 0;
+        $nbAvailablePlayer = count($joueurRepository->findBy(['equipe' => null, 'typeLicence' => Joueur::TYPELICENCE['Compétition']]));
         $nbEquipe = count($allEquipes);
         $equipe = (new Equipe())->setPriorite(-1)->setNumero(++$nbEquipe);
         $form = $this->createForm(NewEquipeType::class, $equipe);
@@ -42,7 +43,8 @@ class EquipeController extends AbstractController
         return $this->render('equipe/index.html.twig', [
             'equipes' => $allEquipes,
             'form' => $form,
-            'nbUncompleteTeam' => $nbUncompleteTeam
+            'nbUncompleteTeam' => $nbUncompleteTeam,
+            'nbAvailablePlayer' => $nbAvailablePlayer,
         ]);
     }
 
