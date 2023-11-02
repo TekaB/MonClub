@@ -29,6 +29,8 @@ class EquipeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $equipe->setPriorite(Equipe::DEFAULT_PRIORITY[$equipe->getNiveau()]);
             $equipeRepository->add($equipe, true);
+
+            return $this->redirectToRoute("app_equipe");
         }
 
         foreach ($allEquipes as $equipe) {
