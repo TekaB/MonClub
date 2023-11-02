@@ -1,19 +1,20 @@
 {% extends 'base.html.twig' %}
 {% set page_title = 'MonClub - Mes équipes' %}
 {% block content %}
-
     <div class="bg-info text-white p-3 d-flex mb-3">
         <h1 class="h1">Mes équipes - </h1>
         <div class="w-50 d-flex ml-3 align-items-center">
             {{ form_start(form, {'attr': {'class': 'form d-flex align-items-center'}}) }}
-            <div class="d-flex align-items-center">
-                {{ form_label(form.niveau, 'Nouvelle ', {'label_attr': {'class': 'h4 mb-0 mr-2'}}) }}
-                {{ form_widget(form.niveau, {'attr': {'class' : 'form-control mr-2'}}) }}
-            </div>
-            {{ form_rest(form) }}
-            <button class="btn btn-primary mr-1">OK</button>
+                <div class="d-flex align-items-center">
+                    {{ form_label(form.niveau, 'Nouvelle ', {'label_attr': {'class': 'h4 mb-0 mr-2'}}) }}
+                    {{ form_widget(form.niveau, {'attr': {'class' : 'form-control mr-2'}}) }}
+                </div>
+                {{ form_rest(form) }}
+                    <button class="btn btn-primary mr-1">OK</button>
             {{ form_end(form) }}
-            {% if nbUncompleteTeam > 0 and nbAvailablePlayer > 0 %}<a class="btn btn-secondary" href="{{ path('app_equipe_autocompleteall') }}">Remplir mes équipes</a>{% endif %}
+            {% if nbUncompleteTeam > 0 and nbAvailablePlayer > 0 %}
+                <a class="btn btn-secondary" href="{{ path('app_equipe_autocompleteall') }}">Remplir mes équipes</a>
+            {% endif %}
         </div>
     </div>
     {% if equipes|length > 0 %}
