@@ -19,3 +19,14 @@ body {
     text-decoration: none;
     color: white;
 }
+
+.card-body-joueur-brule {
+    transition: background-color ease-in-out .1s;
+    color: #dc3545;
+}
+
+.card-body-joueur-brule:hover {
+    background-color: #545b62;
+    text-decoration: none;
+    color: #dc3545;
+}

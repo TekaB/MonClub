@@ -57,4 +57,19 @@ class JoueurRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findJoueurHighestBrulage(Joueur $joueur)
+    {
+        return $this->createQueryBuilder('j')
+            ->select('jr.numeroEquipe')
+            ->join('j.rencontres', 'jr')
+            ->where('j = :joueur')
+            ->groupBy('jr.numeroEquipe')
+            ->having('count(jr) > 1')
+            ->orderBy('jr.numeroEquipe', 'ASC')
+            ->setParameter('joueur', $joueur)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult();
+    }
 }

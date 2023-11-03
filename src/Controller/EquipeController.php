@@ -8,6 +8,7 @@ use App\Form\ModifierEquipeType;
 use App\Form\NewEquipeType;
 use App\Repository\EquipeRepository;
 use App\Repository\JoueurRepository;
+use App\Service\BrulageService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,9 +18,19 @@ use Symfony\Component\Routing\Annotation\Route;
 class EquipeController extends AbstractController
 {
     #[Route('/equipe', name: 'app_equipe')]
-    public function index(EquipeRepository $equipeRepository, Request $request, JoueurRepository $joueurRepository): Response
+    public function index(EquipeRepository $equipeRepository, Request $request, JoueurRepository $joueurRepository, BrulageService $brulageService): Response
     {
         $allEquipes = $equipeRepository->findBy([], ['numero' => 'ASC']);
+        $infosBrulage = [];
+
+        foreach ($allEquipes as $equipe) {
+            $brulages = $brulageService->checkBrulage($equipe->getJoueurs()->toArray());
+
+            foreach ($brulages as $key => $brulage) {
+                $infosBrulage[$key] = $brulage;
+            }
+        }
+
         $nbUncompleteTeam = 0;
         $nbAvailablePlayer = count($joueurRepository->findBy(['equipe' => null, 'typeLicence' => Joueur::TYPELICENCE['Compétition']]));
         $nbEquipe = count($allEquipes);
@@ -31,12 +42,12 @@ class EquipeController extends AbstractController
             $equipe->setPriorite(Equipe::DEFAULT_PRIORITY[$equipe->getNiveau()]);
             $equipeRepository->add($equipe, true);
 
-            return $this->redirectToRoute("app_equipe");
+            return $this->redirectToRoute('app_equipe');
         }
 
         foreach ($allEquipes as $equipe) {
             if (count($equipe->getJoueurs()) < 4) {
-                $nbUncompleteTeam++;
+                ++$nbUncompleteTeam;
             }
         }
 
@@ -45,6 +56,7 @@ class EquipeController extends AbstractController
             'form' => $form,
             'nbUncompleteTeam' => $nbUncompleteTeam,
             'nbAvailablePlayer' => $nbAvailablePlayer,
+            'infosBrulage' => $infosBrulage,
         ]);
     }
 
@@ -91,7 +103,7 @@ class EquipeController extends AbstractController
         $joueurs = $joueurRepository->findBy(
             ['equipe' => null, 'typeLicence' => Joueur::TYPELICENCE['Compétition']],
             ['points' => 'DESC'],
-            (Equipe::MAXJOUEUR - $nbJoueursDansEquipe)
+            Equipe::MAXJOUEUR - $nbJoueursDansEquipe
         );
 
         foreach ($joueurs as $joueur) {
@@ -119,7 +131,7 @@ class EquipeController extends AbstractController
                 if ($nbJoueursDansEquipe < 4) {
                     $equipe->addJoueur($joueur);
                     unset($joueurs[$key]);
-                    $nbJoueursDansEquipe += 1;
+                    ++$nbJoueursDansEquipe;
                 }
             }
 
@@ -129,6 +141,7 @@ class EquipeController extends AbstractController
         $manager->flush();
 
         $this->addFlash('success', 'Tada ! Vos équipes ont été remplie au maximum !');
+
         return $this->redirectToRoute('app_equipe');
     }
 }

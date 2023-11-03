@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Joueur;
 use App\Form\NewJoueurType;
-use App\Repository\EquipeRepository;
 use App\Repository\JoueurRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,7 +35,7 @@ class JoueurController extends AbstractController
             $joueurRepository->add($joueur, true);
             $this->addFlash('success', 'Joueur ajouté !');
 
-            if ($form->getClickedButton()->getName() === 'addAndStartAgain') {
+            if ('addAndStartAgain' === $form->getClickedButton()->getName()) {
                 return $this->redirectToRoute('app_joueur_new');
             }
 
@@ -44,7 +43,7 @@ class JoueurController extends AbstractController
         }
 
         return $this->render('joueur/new.html.twig', [
-            'form' => $form
+            'form' => $form,
         ]);
     }
 
@@ -65,7 +64,7 @@ class JoueurController extends AbstractController
 
         return $this->render('joueur/edit.html.twig', [
             'form' => $form,
-            'joueur' => $joueur
+            'joueur' => $joueur,
         ]);
     }
 

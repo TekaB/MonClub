@@ -18,10 +18,10 @@ class ModifierEquipeType extends AbstractType
     {
         $builder
             ->add('numero', IntegerType::class, [
-                'label' => 'Numéro équipe'
+                'label' => 'Numéro équipe',
             ])
             ->add('niveau', ChoiceType::class, [
-                'choices' => Equipe::NIVEAU
+                'choices' => Equipe::NIVEAU,
             ])
             ->add('priorite', IntegerType::class, [
                 'label' => 'Importance',

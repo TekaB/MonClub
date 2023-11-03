@@ -18,11 +18,11 @@ class NewJoueurType extends AbstractType
         $builder
             ->add('numeroLicence', TextType::class, [
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control',
                 ],
                 'label_attr' => [
-                    'class' => 'text-primary mb-0'
-                ]
+                    'class' => 'text-primary mb-0',
+                ],
             ])
             ->add('typeLicence', ChoiceType::class, [
                 'choices' => Joueur::TYPELICENCE,
@@ -30,45 +30,45 @@ class NewJoueurType extends AbstractType
                     'class' => 'form-control',
                 ],
                 'label_attr' => [
-                    'class' => 'text-primary mb-0'
-                ]
+                    'class' => 'text-primary mb-0',
+                ],
             ])
             ->add('nom', TextType::class, [
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control',
                 ],
                 'label_attr' => [
-                    'class' => 'text-primary mb-0'
-                ]
+                    'class' => 'text-primary mb-0',
+                ],
             ])
             ->add('prenom', TextType::class, [
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control',
                 ],
                 'label_attr' => [
-                    'class' => 'text-primary mb-0'
-                ]
+                    'class' => 'text-primary mb-0',
+                ],
             ])
             ->add('points', IntegerType::class, [
                 'label' => 'Nombre de points',
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control',
                 ],
                 'label_attr' => [
-                    'class' => 'text-primary mb-0'
-                ]
+                    'class' => 'text-primary mb-0',
+                ],
             ])
             ->add('add', SubmitType::class, [
                 'label' => 'Ajouter ',
                 'attr' => [
-                    'class' => 'btn btn-primary mr-2'
-                ]
+                    'class' => 'btn btn-primary mr-2',
+                ],
             ])
             ->add('addAndStartAgain', SubmitType::class, [
                 'label' => 'Ajouter et créer un nouveau',
                 'attr' => [
-                    'class' => 'btn btn-secondary mr-2'
-                ]
+                    'class' => 'btn btn-secondary mr-2',
+                ],
             ]);
     }
 
