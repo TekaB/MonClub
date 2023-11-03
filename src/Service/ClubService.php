@@ -16,7 +16,7 @@ class ClubService
 
     /**
      * Retourne le club s'il est déjà parametré.
-     * Renvoie un nouveau club sinon
+     * Renvoie un nouveau club sinon.
      */
     public function getClub()
     {

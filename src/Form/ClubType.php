@@ -18,14 +18,14 @@ class ClubType extends AbstractType
                 'label' => 'Nom du club',
                 'attr' => [
                     'placeholder' => 'Mon super club...',
-                    'class' => 'form-control'
-                ]
+                    'class' => 'form-control',
+                ],
             ])
             ->add('image', FileType::class, [
                 'label' => 'Logo / Image',
                 'required' => false,
                 'attr' => [
-                    'class' => 'form-control mb-3'
+                    'class' => 'form-control mb-3',
                 ],
                 'mapped' => false,
             ]);

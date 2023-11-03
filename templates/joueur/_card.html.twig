@@ -1,5 +1,7 @@
-<a href="{{ path('app_joueur_edit', {id: joueur.id}) }}" class="card-body-joueur rounded border p-3 pr-5 mr-2 mb-1">
-    <div>
+<a href="{{ path('app_joueur_edit', {id: joueur.id}) }}"
+
+   class=" {% if brule is defined and brule %} card-body-joueur-brule {% else %}card-body-joueur{% endif%} rounded border p-3 pr-5 mr-2 mb-1">
+    <div >
         {{ joueur.nom }} {{ joueur.prenom }} -
         {{ joueur.points|length == 3 ? joueur.points|slice(0, 1) : joueur.points|slice(0, 2) }}
     </div>
