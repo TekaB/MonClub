@@ -7,6 +7,7 @@ use App\Form\NewRencontreType;
 use App\Repository\EquipeRepository;
 use App\Repository\RencontreRepository;
 use App\Service\BrulageService;
+use App\Service\RencontreService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,10 +16,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class RencontreController extends AbstractController
 {
     #[Route('/rencontre/', name: 'app_rencontre')]
-    public function index(): Response
+    public function index(RencontreRepository $rencontreRepository, RencontreService $rencontreService): Response
     {
+        $rencontres = $rencontreRepository->findAll();
+        $rencontresParEquipe = $rencontreService->getRencontreParNumEquipe($rencontres);
+        $nbRencontresParEquipe = $rencontreService->getNbRencontreParNumEquipe($rencontresParEquipe);
+
         return $this->render('rencontre/index.html.twig', [
-            'controller_name' => 'RencontreController',
+            'rencontresParEquipe' => $rencontresParEquipe,
+            'nbRencontreParEquipe' => $nbRencontresParEquipe,
         ]);
     }
 
