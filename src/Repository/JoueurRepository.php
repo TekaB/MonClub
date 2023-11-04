@@ -52,8 +52,9 @@ class JoueurRepository extends ServiceEntityRepository
     public function findJoueurNonCompet(): array
     {
         return $this->createQueryBuilder('j')
-            ->where('j.typeLicence NOT LIKE \'Compétitif\'')
+            ->where('j.typeLicence NOT LIKE :compet')
             ->orderBy('j.points', 'DESC')
+            ->setParameter('compet', Joueur::TYPELICENCE['Compétition'])
             ->getQuery()
             ->getResult();
     }

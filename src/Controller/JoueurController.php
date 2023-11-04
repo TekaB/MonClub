@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Joueur;
 use App\Form\NewJoueurType;
 use App\Repository\JoueurRepository;
+use App\Service\BrulageService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -48,9 +49,10 @@ class JoueurController extends AbstractController
     }
 
     #[Route('/joueurs/{id}/edit', name: 'app_joueur_edit')]
-    public function edit(string $id, JoueurRepository $joueurRepository, Request $request): Response
+    public function edit(string $id, JoueurRepository $joueurRepository, Request $request, BrulageService $brulageService): Response
     {
         $joueur = $joueurRepository->find($id);
+        $infosBrulage = $brulageService->checkBrulage([$joueur]);
         $form = $this->createForm(NewJoueurType::class, $joueur);
 
         $form->handleRequest($request);
@@ -65,6 +67,7 @@ class JoueurController extends AbstractController
         return $this->render('joueur/edit.html.twig', [
             'form' => $form,
             'joueur' => $joueur,
+            'infosBrulage' => $infosBrulage
         ]);
     }
 

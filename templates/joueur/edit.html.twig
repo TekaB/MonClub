@@ -4,33 +4,51 @@
     <div class="bg-info h1 text-white p-3">
         Modifier {{ joueur.prenom }} {{ joueur.nom }}
     </div>
-    <div class="card mx-3 p-3">
-        {{ form_start(form) }}
-            <div class="mb-2">
-                {{ form_label(form.nom) }}
-                {{ form_widget(form.nom) }}
+    <div class="d-flex align-items-start">
+        <div class="card mx-3 w-25">
+            <div class="card-header text-info h3">Informations</div>
+            <div class="card-body">
+                {{ form_start(form) }}
+                    <div class="mb-2">
+                        {{ form_label(form.numeroLicence) }}
+                        {{ form_widget(form.numeroLicence, {'disabled': true}) }}
+                    </div>
+                    <div class="mb-2">
+                        {{ form_label(form.nom) }}
+                        {{ form_widget(form.nom) }}
+                    </div>
+                    <div class="mb-2">
+                        {{ form_label(form.prenom) }}
+                        {{ form_widget(form.prenom) }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form_label(form.typeLicence) }}
+                        {{ form_widget(form.typeLicence) }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form_label(form.points) }}
+                        {{ form_widget(form.points) }}
+                    </div>
+                    <div class="d-flex">
+                        {{ form_row(form.add, {'label': 'Modifier'}) }}
+                        {{ form_row(form.addAndStartAgain, {'label': 'Modifier et en créer un nouveau'}) }}
+                        <a class='btn btn-danger' href="{{ path('app_joueur_delete', {id: joueur.id}) }}">Supprimer</a>
+                    </div>
+                {{ form_end(form) }}
             </div>
-            <div class="mb-2">
-                {{ form_label(form.prenom) }}
-                {{ form_widget(form.prenom) }}
+        </div>
+        <div class="card">
+            <div class="card-header text-info h3">{{ joueur.rencontres|length > 1 ? 'Rencontres' : 'Rencontre'}} cette phase</div>
+            <div class="card-body">
+                <ul>
+                {% for rencontre in joueur.rencontres %}
+                    <li>En équipe {{ rencontre.numeroEquipe }} le {{ rencontre.date|date('d/m/Y') }}</li>
+                {% endfor %}
+                </ul>
             </div>
-            <div class="mb-2">
-                {{ form_label(form.numeroLicence) }}
-                {{ form_widget(form.numeroLicence) }}
-            </div>
-            <div class="mb-3">
-                {{ form_label(form.typeLicence) }}
-                {{ form_widget(form.typeLicence) }}
-            </div>
-            <div class="mb-3">
-                {{ form_label(form.points) }}
-                {{ form_widget(form.points) }}
-            </div>
-            <div class="d-flex">
-                {{ form_row(form.add, {'label': 'Modifier'}) }}
-                {{ form_row(form.addAndStartAgain, {'label': 'Modifier et en créer un nouveau'}) }}
-                <a class='btn btn-danger' href="{{ path('app_joueur_delete', {id: joueur.id}) }}">Supprimer</a>
-            </div>
-        {{ form_end(form) }}
+            {% if infosBrulage|length > 0 and infosBrulage[joueur.id] is defined %}
+                <div class="card-footer text-danger">Ce joueur est brulé en équipe {{ infosBrulage[joueur.id] }}</div>
+            {% endif %}
+        </div>
     </div>
 {% endblock %}
