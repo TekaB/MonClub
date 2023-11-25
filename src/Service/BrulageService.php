@@ -7,29 +7,32 @@ use App\Repository\JoueurRepository;
 class BrulageService
 {
     private $joueurRepository;
+
     public function __construct(JoueurRepository $joueurRepository)
     {
         $this->joueurRepository = $joueurRepository;
     }
 
-    public function checkBrulage(array $joueurs)
+    /**
+     * Returns the nb of team where each player is burnt as [idPlayer => numberTeam] for each player given.
+     *
+     * @param array $joueurs the array of players
+     */
+    public function checkBrulage(array $joueurs): array
     {
-        $brulages = [];
-        $resultat = [];
+        $highestMatches = [];
+        $joueurEquipeBrule = [];
 
         foreach ($joueurs as $joueur) {
-            $brulages[$joueur->getId()] = $this->joueurRepository->findJoueurHighestBrulage($joueur);
+            $highestMatches[$joueur->getId()] = $this->joueurRepository->findJoueurHighestMatches($joueur);
         }
 
-        foreach($brulages as $cle => $sousTableau) {
-            foreach($sousTableau as $element){
-                if (isset($element['numeroEquipe'])) {
-                    $resultat[$cle] = $element['numeroEquipe'];
-                    break; // Sortir de la boucle interne une fois que la valeur est récupérée
-                }
+        foreach ($highestMatches as $idJoueur => $match) {
+            if (count($match) > 0) {
+                $joueurEquipeBrule[$idJoueur] = end($highestMatches[$idJoueur])['numeroEquipe'];
             }
         }
 
-        return $resultat;
+        return $joueurEquipeBrule;
     }
 }

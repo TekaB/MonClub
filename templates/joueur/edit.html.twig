@@ -11,7 +11,7 @@
                 {{ form_start(form) }}
                     <div class="mb-2">
                         {{ form_label(form.numeroLicence) }}
-                        {{ form_widget(form.numeroLicence, {'disabled': true}) }}
+                        {{ form_widget(form.numeroLicence, {'attr': {'readonly': true}}) }}
                     </div>
                     <div class="mb-2">
                         {{ form_label(form.nom) }}
@@ -47,7 +47,7 @@
                 </ul>
             </div>
             {% if infosBrulage|length > 0 and infosBrulage[joueur.id] is defined %}
-                <div class="card-footer text-danger">Ce joueur est brulé en équipe {{ infosBrulage[joueur.id] }}</div>
+                <div class="card-footer text-info">Ce joueur est brulé en équipe {{ infosBrulage[joueur.id] }}</div>
             {% endif %}
         </div>
     </div>

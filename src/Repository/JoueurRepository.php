@@ -59,7 +59,11 @@ class JoueurRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findJoueurHighestBrulage(Joueur $joueur)
+    /**
+     * This function returns players matches in his 2 highest teams.
+     * @return float|int|mixed|string
+     */
+    public function findJoueurHighestMatches(Joueur $joueur): mixed
     {
         return $this->createQueryBuilder('j')
             ->select('jr.numeroEquipe')
@@ -69,7 +73,7 @@ class JoueurRepository extends ServiceEntityRepository
             ->having('count(jr) > 1')
             ->orderBy('jr.numeroEquipe', 'ASC')
             ->setParameter('joueur', $joueur)
-            ->setMaxResults(1)
+            ->setMaxResults(2)
             ->getQuery()
             ->getResult();
     }

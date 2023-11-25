@@ -14,11 +14,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class JoueurController extends AbstractController
 {
     #[Route('/joueurs', name: 'app_joueur')]
-    public function index(JoueurRepository $joueurRepository): Response
+    public function index(JoueurRepository $joueurRepository, BrulageService $brulageService): Response
     {
+        $joueurCompet = $joueurRepository->findBy(['typeLicence' => Joueur::TYPELICENCE['Compétition']], ['points' => 'DESC']);
+        $brulagesCompet = $brulageService->checkBrulage($joueurCompet);
+
         return $this->render('joueur/index.html.twig', [
             'joueursNonCompet' => $joueurRepository->findJoueurNonCompet(),
-            'joueursCompet' => $joueurRepository->findBy(['typeLicence' => Joueur::TYPELICENCE['Compétition']], ['points' => 'DESC']),
+            'joueursCompet' => $joueurCompet,
+            'brulageCompet' => $brulagesCompet
         ]);
     }
 
@@ -56,7 +60,6 @@ class JoueurController extends AbstractController
         $form = $this->createForm(NewJoueurType::class, $joueur);
 
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $joueurRepository->add($joueur, true);
             $this->addFlash('success', 'Joueur mis à jour');
