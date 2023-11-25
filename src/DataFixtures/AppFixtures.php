@@ -16,37 +16,37 @@ class AppFixtures extends Fixture
         $pierre = (new Joueur())
             ->setNom('LICTEVOUT')
             ->setPrenom('Pierre')
-            ->setNumeroLicence("6211534")
+            ->setNumeroLicence('6211534')
             ->setPoints(890)
             ->setTypeLicence(Joueur::TYPELICENCE['Compétition']);
         $kev = (new Joueur())
             ->setNom('BELKA')
             ->setPrenom('Kévin')
-            ->setNumeroLicence("628519")
+            ->setNumeroLicence('628519')
             ->setPoints(1732)
             ->setTypeLicence(Joueur::TYPELICENCE['Compétition']);
         $rem = (new Joueur())
             ->setNom('KOSTRZEWKSI')
             ->setPrenom('Rémy')
-            ->setNumeroLicence("629209")
+            ->setNumeroLicence('629209')
             ->setPoints(2067)
             ->setTypeLicence(Joueur::TYPELICENCE['Compétition']);
         $jo = (new Joueur())
             ->setNom('LECLAIRE')
             ->setPrenom('Johann')
-            ->setNumeroLicence("625250")
+            ->setNumeroLicence('625250')
             ->setPoints(1800)
             ->setTypeLicence(Joueur::TYPELICENCE['Compétition']);
         $evenementiel = (new Joueur())
             ->setNom('Evenemential')
             ->setPrenom('Titi')
-            ->setNumeroLicence("0101010")
+            ->setNumeroLicence('0101010')
             ->setPoints(500)
             ->setTypeLicence(Joueur::TYPELICENCE['Evénementiel']);
         $loisir = (new Joueur())
             ->setNom('LOISIR')
             ->setPrenom('Toto')
-            ->setNumeroLicence("1010101")
+            ->setNumeroLicence('1010101')
             ->setPoints(500)
             ->setTypeLicence(Joueur::TYPELICENCE['Loisir']);
 
@@ -64,26 +64,26 @@ class AppFixtures extends Fixture
             ->setTypeLicence(Joueur::TYPELICENCE['Compétition'])
             ->setNom('DESPREZ')
             ->setPoints(697)
-            ->setPrenom("Teddy")
-            ->setNumeroLicence("6211165");
+            ->setPrenom('Teddy')
+            ->setNumeroLicence('6211165');
         $noteam2 = (new Joueur())
             ->setTypeLicence(Joueur::TYPELICENCE['Compétition'])
             ->setNom('LECIGNE')
             ->setPoints(673)
-            ->setPrenom("Jessy")
-            ->setNumeroLicence("6229957");
+            ->setPrenom('Jessy')
+            ->setNumeroLicence('6229957');
         $noteam3 = (new Joueur())
             ->setTypeLicence(Joueur::TYPELICENCE['Compétition'])
             ->setNom('BERTHIER')
             ->setPoints(500)
-            ->setPrenom("Christophe")
-            ->setNumeroLicence("6241075");
+            ->setPrenom('Christophe')
+            ->setNumeroLicence('6241075');
         $noteam4 = (new Joueur())
             ->setTypeLicence(Joueur::TYPELICENCE['Compétition'])
             ->setNom('JUMETZ')
             ->setPoints(498)
-            ->setPrenom("Titouan")
-            ->setNumeroLicence("6228673");
+            ->setPrenom('Titouan')
+            ->setNumeroLicence('6228673');
 
         $manager->persist($pierre);
         $manager->persist($kev);

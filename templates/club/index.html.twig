@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 {% set page_title = 'MonClub  - Mon club' %}
 {# twigcs use_var page_title #}
-
 {% block content %}
     <div class="bg-info text-white p-3 mb-4">
         <p class="d-flex align-items-center mb-0"><span class="h1 mr-3"> {{ club.club.nom }} - </span> <a class="btn btn-primary" href="{{ path('app_club_edit') }}">Modifier</a></p>

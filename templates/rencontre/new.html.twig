@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+{% set page_title = 'MonClub | Rencontre' %}
+{% block content %}
+    <div class="bg-info p-3 text-white mb-3">
+        <p class="h1">Match pour l'équipe {{ equipe.numero }}</p>
+    </div>
+    <div class="mx-3 card w-25">
+        <div class="card-body">
+            {{ form_start(form) }}
+            {{ form_row(form.date, {'attr': {'class': 'w-50 form-control mb-3 text-primary'}}) }}
+            <span>Avec</span>
+            <div class="d-flex flex-wrap flex-wrap">
+                {% set brule = false %}
+                {% for joueur in equipe.joueurs %}
+                    {% if infosBrulage[joueur.id] is defined and equipe.numero > infosBrulage[joueur.id]%}
+                        {% set brule = true %}
+                    {% endif %}
+                    {% include 'joueur/_card.html.twig' %}
+                {% endfor %}
+            </div>
+            <button class="btn btn-primary">Valider</button>
+            {{ form_end(form) }}
+        </div>
+
+    </div>
+{% endblock %}

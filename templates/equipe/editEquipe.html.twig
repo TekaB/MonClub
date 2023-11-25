@@ -11,8 +11,8 @@
                     {{ form_row(form.numero, {'attr': {'class': 'form-control', 'style': 'width: unset;'}}) }}
                     {{ form_row(form.niveau, {'attr': {'class': 'form-control', 'style': 'width: unset;'}}) }}
                     <div>
-                    {{ form_label(form.priorite) }}
-                    {{ form_widget(form.priorite, {'attr': {'class': 'form-control', 'style': 'width: unset;'}}) }}
+                        {{ form_label(form.priorite) }}
+                        {{ form_widget(form.priorite, {'attr': {'class': 'form-control', 'style': 'width: unset;'}}) }}
                     </div>
                 </div>
                 <div>
@@ -20,7 +20,7 @@
                 </div>
                 <hr>
                 <div>
-                    Joueurs de l'équipe
+                    <span>Joueurs de l'équipe</span>
                     <div class="d-flex">
                         {% for joueur in form.joueurs %}
                             {% if joueur.vars.checked %}
@@ -31,7 +31,7 @@
                         {% endfor %}
                     </div>
                     <hr>
-                    A disposition | Joueurs d'autres équipes
+                    <span>A disposition | Joueurs d'autres équipes</span>
                     <div class="d-flex flex-wrap">
                         {% for joueur in form.joueurs %}
                             {% if not joueur.vars.checked %}
@@ -43,10 +43,10 @@
                     </div>
                 </div>
                 {{ form_rest(form) }}
-            <div class="d-flex">
-                <button class="btn btn-primary mr-1">Valider</button>
-                <a class="btn btn-danger" href="{{ path('app_equipe_delete', {id: equipe.id}) }}">Supprimer</a>
-            </div>
+                <div class="d-flex">
+                    <button class="btn btn-primary mr-1">Valider</button>
+                    <a class="btn btn-danger" href="{{ path('app_equipe_delete', {id: equipe.id}) }}">Supprimer</a>
+                </div>
             {{ form_end(form) }}
         </div>
     </div>

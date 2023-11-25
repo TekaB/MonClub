@@ -1,0 +1,21 @@
+<div class="card mb-2">
+    <a class="card-header text-primary" href="{{ path('app_joueur_edit', {id: joueur.id}) }}">
+        {{ joueur.prenom }} {{ joueur.nom }}
+        - {{ joueur.points|length == 3 ? joueur.points|slice(0, 1) : joueur.points|slice(0, 2) }}
+    </a>
+    {% if joueur.rencontres is not empty %}
+        {% set rencontres = joueur.rencontres|sort((a, b) => a.date > b.date) %}
+        <div class="card-body">
+            <ul class="mb-0">
+                {% for rencontre in rencontres %}
+                    <li>{{ rencontre.date|date('d/m/Y') }} en équipe {{ rencontre.numeroEquipe }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+    {% if brulages[joueur.id] is defined %}
+        <div class="card-footer text-info">
+            Brûlé en équipe {{ brulages[joueur.id] }}
+        </div>
+    {% endif %}
+</div>

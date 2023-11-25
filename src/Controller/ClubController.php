@@ -26,13 +26,13 @@ class ClubController extends AbstractController
         $nbEquipe = count($equipeRepository->findAll());
         $nbJoueurs = count($allJoueurs);
         $nbCompetiteur = count(array_filter($allJoueurs, function ($joueur) {
-            return ($joueur->getTypeLicence() === Joueur::TYPELICENCE['Compétition']);
+            return $joueur->getTypeLicence() === Joueur::TYPELICENCE['Compétition'];
         }));
         $nbLoisir = count(array_filter($allJoueurs, function ($joueur) {
-            return ($joueur->getTypeLicence() === Joueur::TYPELICENCE['Loisir']);
+            return $joueur->getTypeLicence() === Joueur::TYPELICENCE['Loisir'];
         }));
         $nbEvenementiel = count(array_filter($allJoueurs, function ($joueur) {
-            return ($joueur->getTypeLicence() === Joueur::TYPELICENCE['Evénementiel']);
+            return $joueur->getTypeLicence() === Joueur::TYPELICENCE['Evénementiel'];
         }));
 
         return $this->render('club/index.html.twig', [
@@ -46,9 +46,9 @@ class ClubController extends AbstractController
 
     #[Route('/club/edit', name: 'app_club_edit')]
     public function edit(
-        ClubRepository   $clubRepository,
-        ClubService      $clubService,
-        Request          $request,
+        ClubRepository $clubRepository,
+        ClubService $clubService,
+        Request $request,
         SluggerInterface $slugger
     ): Response {
         $club = $clubService->getClub();
@@ -61,7 +61,7 @@ class ClubController extends AbstractController
             if ($image) {
                 $originalFilename = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
                 $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename . '-' . uniqid() . '.' . $image->guessExtension();
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$image->guessExtension();
                 $club->setImage($newFilename);
 
                 try {

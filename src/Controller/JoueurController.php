@@ -4,8 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Joueur;
 use App\Form\NewJoueurType;
-use App\Repository\EquipeRepository;
 use App\Repository\JoueurRepository;
+use App\Service\BrulageService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,11 +14,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class JoueurController extends AbstractController
 {
     #[Route('/joueurs', name: 'app_joueur')]
-    public function index(JoueurRepository $joueurRepository): Response
+    public function index(JoueurRepository $joueurRepository, BrulageService $brulageService): Response
     {
+        $joueurCompet = $joueurRepository->findBy(['typeLicence' => Joueur::TYPELICENCE['Compétition']], ['points' => 'DESC']);
+        $brulagesCompet = $brulageService->checkBrulage($joueurCompet);
+
         return $this->render('joueur/index.html.twig', [
             'joueursNonCompet' => $joueurRepository->findJoueurNonCompet(),
-            'joueursCompet' => $joueurRepository->findBy(['typeLicence' => Joueur::TYPELICENCE['Compétition']], ['points' => 'DESC']),
+            'joueursCompet' => $joueurCompet,
+            'brulageCompet' => $brulagesCompet
         ]);
     }
 
@@ -36,7 +40,7 @@ class JoueurController extends AbstractController
             $joueurRepository->add($joueur, true);
             $this->addFlash('success', 'Joueur ajouté !');
 
-            if ($form->getClickedButton()->getName() === 'addAndStartAgain') {
+            if ('addAndStartAgain' === $form->getClickedButton()->getName()) {
                 return $this->redirectToRoute('app_joueur_new');
             }
 
@@ -44,18 +48,18 @@ class JoueurController extends AbstractController
         }
 
         return $this->render('joueur/new.html.twig', [
-            'form' => $form
+            'form' => $form,
         ]);
     }
 
     #[Route('/joueurs/{id}/edit', name: 'app_joueur_edit')]
-    public function edit(string $id, JoueurRepository $joueurRepository, Request $request): Response
+    public function edit(string $id, JoueurRepository $joueurRepository, Request $request, BrulageService $brulageService): Response
     {
         $joueur = $joueurRepository->find($id);
+        $infosBrulage = $brulageService->checkBrulage([$joueur]);
         $form = $this->createForm(NewJoueurType::class, $joueur);
 
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $joueurRepository->add($joueur, true);
             $this->addFlash('success', 'Joueur mis à jour');
@@ -65,7 +69,8 @@ class JoueurController extends AbstractController
 
         return $this->render('joueur/edit.html.twig', [
             'form' => $form,
-            'joueur' => $joueur
+            'joueur' => $joueur,
+            'infosBrulage' => $infosBrulage
         ]);
     }
 

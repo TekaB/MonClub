@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: EquipeRepository::class)]
 class Equipe
 {
-    const NIVEAU = [
+    public const NIVEAU = [
         'PRO A' => 'PRO A',
         'PRO B' => 'PRO B',
         'N1' => 'N1',
@@ -26,7 +26,7 @@ class Equipe
         'D3' => 'D3',
     ];
 
-    const DEFAULT_PRIORITY = [
+    public const DEFAULT_PRIORITY = [
         'PRO A' => 100,
         'PRO B' => 90,
         'N1' => 80,
@@ -42,7 +42,7 @@ class Equipe
         'D3' => 0,
     ];
 
-    const MAXJOUEUR = 4;
+    public const MAXJOUEUR = 4;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]

@@ -52,8 +52,28 @@ class JoueurRepository extends ServiceEntityRepository
     public function findJoueurNonCompet(): array
     {
         return $this->createQueryBuilder('j')
-            ->where('j.typeLicence NOT LIKE \'Compétitif\'')
+            ->where('j.typeLicence NOT LIKE :compet')
             ->orderBy('j.points', 'DESC')
+            ->setParameter('compet', Joueur::TYPELICENCE['Compétition'])
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * This function returns players matches in his 2 highest teams.
+     * @return float|int|mixed|string
+     */
+    public function findJoueurHighestMatches(Joueur $joueur): mixed
+    {
+        return $this->createQueryBuilder('j')
+            ->select('jr.numeroEquipe')
+            ->join('j.rencontres', 'jr')
+            ->where('j = :joueur')
+            ->groupBy('jr.numeroEquipe')
+            ->having('count(jr) > 1')
+            ->orderBy('jr.numeroEquipe', 'ASC')
+            ->setParameter('joueur', $joueur)
+            ->setMaxResults(2)
             ->getQuery()
             ->getResult();
     }
